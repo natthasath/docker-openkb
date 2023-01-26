@@ -1,6 +1,6 @@
-# 🎉 Template Docker Compose
+# 🎉 Docker openKB
 
-Docker Compose is a tool for defining and running multi-container Docker applications. It allows developers to configure all of their application's services in a single file, and then start and stop those services with a single command.
+openKB is an open-source knowledge base platform that enables users to easily create, manage and share knowledge within their organization. It is designed to be simple, yet powerful, and can be easily customized to fit the specific needs of any team or company.
 
 ![version](https://img.shields.io/badge/version-1.0-blue)
 ![rating](https://img.shields.io/badge/rating-★★★★★-yellow)
@@ -8,7 +8,7 @@ Docker Compose is a tool for defining and running multi-container Docker applica
 
 ### 🥈 Run
 
-- [http://localhost:9000/](http://localhost:9000/) username : `admin` password : `admin`
+- [http://localhost:4444/](http://localhost:4444/)
 
 ```shell
 docker-compose up -d
