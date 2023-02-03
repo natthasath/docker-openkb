@@ -6,7 +6,7 @@ openKB is an open-source knowledge base platform that enables users to easily cr
 ![rating](https://img.shields.io/badge/rating-★★★★★-yellow)
 ![uptime](https://img.shields.io/badge/uptime-100%25-brightgreen)
 
-### 🥈 Run
+### 🏆 Run
 
 - [http://localhost:4444/](http://localhost:4444/)
 
