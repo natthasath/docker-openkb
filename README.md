@@ -8,7 +8,7 @@ openKB is an open-source knowledge base platform that enables users to easily cr
 
 ### 🏆 Run
 
-- [http://localhost:4444/](http://localhost:4444/)
+- [http://localhost:4444/](http://localhost:4444/) username : `admin@example.com` password : `admin`
 
 ```shell
 docker-compose up -d

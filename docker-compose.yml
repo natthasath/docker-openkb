@@ -9,13 +9,8 @@ services:
     networks:
       - default
     volumes:
-      - data:/data
-      - /var/lib/openKB:/var/openKB/data
+      - ./data:/var/openKB/data
 
 networks:
   default:
     driver: bridge
-
-volumes:
-  data:
-    driver: local
