@@ -13,4 +13,10 @@ services:
 
 networks:
   default:
+    name: docker_openkb_network
     driver: bridge
+
+volumes:
+  data:
+    name: docker_openkb_data
+    driver: local
