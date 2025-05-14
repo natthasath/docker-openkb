@@ -1,3 +1,5 @@
+name: ${GLOBAL_NAME}
+
 services:
   openkb:
     container_name: ${OPENKB_CONTAINER_NAME}
@@ -5,14 +7,45 @@ services:
     restart: ${RESTART_POLICY}
     environment:
       - TZ=${TIMEZONE}
+      - OPENKB_DATABASE_HOST=postgres
+      - OPENKB_DATABASE_PORT=5432
+      - OPENKB_DATABASE_NAME=${POSTGRES_DATABASE}
+      - OPENKB_DATABASE_USER=${POSTGRES_USER}
+      - OPENKB_DATABASE_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - ${OPENKB_HTTP_PORT}:4444
+      - ${OPENKB_HTTPS_PORT}:4443
     volumes:
-      - default:/var/openKB/data
+      - openkb_config:/var/openKB/config
+      - openkb_data:/var/openKB/data
+    networks:
+      - default
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:4444"]
+      interval: ${HEALTHCHECK_INTERVAL}
+      timeout: ${HEALTHCHECK_TIMEOUT}
+      retries: ${HEALTHCHECK_RETRIES}
+
+  postgres:
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    image: ${POSTGRES_IMAGE_NAME}:${POSTGRES_IMAGE_VERSION}
+    restart: ${RESTART_POLICY}
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DATABASE}
+      - TZ=${TIMEZONE}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - default
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:4444"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: ${HEALTHCHECK_INTERVAL}
       timeout: ${HEALTHCHECK_TIMEOUT}
       retries: ${HEALTHCHECK_RETRIES}
@@ -23,6 +56,12 @@ networks:
     driver: bridge
 
 volumes:
-  default:
+  openkb_config:
+    name: ${OPENKB_CONTAINER_NAME}_config
+    driver: local
+  openkb_data:
     name: ${OPENKB_CONTAINER_NAME}_data
+    driver: local
+  postgres_data:
+    name: ${POSTGRES_CONTAINER_NAME}_data
     driver: local
